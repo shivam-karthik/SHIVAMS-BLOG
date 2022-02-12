@@ -16,7 +16,7 @@ import os
 CURRENT_USER_ID = None
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = 'gdyhdf5555hchgfjhgk'
 ckeditor = CKEditor(app)
 Bootstrap(app)
 gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False, force_lower=False, use_ssl=False, base_url=None)
@@ -211,7 +211,8 @@ def edit_post(post_id):
         subtitle=post.subtitle,
         img_url=post.img_url,
         author=post.author,
-        body=post.body
+        body=post.body,
+        author = current_user
     )
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
@@ -222,7 +223,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    return render_template("make-post.html", form=edit_form,is_edit=True, current_user=current_user)
+    return render_template("make-post.html", form=edit_form, is_edit=True, current_user=current_user)
 
 
 @app.route("/delete/<int:post_id>")
